@@ -353,7 +353,7 @@ def read_stream(stream, output, prebuffer, chunk_size=8192):
                                    prefix=os.path.basename(args.output))
     elif show_record_progress:
         stream_iterator = progress(stream_iterator,
-                                   prefix=os.path.basename(args.record))
+                                   prefix=os.path.basename(args.record if args.record else args.record_and_pipe))
 
     try:
         for data in stream_iterator:
