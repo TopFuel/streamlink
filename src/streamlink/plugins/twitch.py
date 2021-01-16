@@ -563,6 +563,8 @@ class Twitch(Plugin):
     def _access_token(self, is_live, channel_or_vod):
         try:
             sig, token = self.api.access_token(is_live, channel_or_vod)
+            token_json = parse_json(token)
+            log.debug("user_id: {0} | subscriber: {1} | show_ads: {2}".format(token_json.get("user_id"), token_json.get("subscriber"), token_json.get("show_ads")))
         except (PluginError, TypeError):
             raise NoStreamsError(self.url)
 
