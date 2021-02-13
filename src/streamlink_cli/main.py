@@ -12,6 +12,7 @@ from functools import partial
 from gettext import gettext
 from itertools import chain
 from time import sleep
+from datetime import datetime
 
 import requests
 from socks import __version__ as socks_version
@@ -46,6 +47,20 @@ log = logging.getLogger("streamlink.cli")
 def check_file_output(filename, force):
     """Checks if file already exists and ask the user if it should
     be overwritten if it does."""
+
+    if args.timestamp:
+        log.debug("Adding timestamp to filename.")
+        if filename.find("%timestamp%") != -1:
+            now = datetime.now()
+            timestamp = now.strftime(args.timestamp)
+            if timestamp.strip():
+                log.debug("Timestamp: {0}".format(timestamp))
+                filename = filename.replace("%timestamp%", timestamp)
+                log.debug("New filename: {0}".format(filename))
+            else:
+                log.error("Invalid timestamp format, returned empty string.")
+        else:
+            log.error("Option --timestamp used but no %timestamp% found in the output filename.")
 
     log.debug("Checking file output")
 

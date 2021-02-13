@@ -584,6 +584,16 @@ def build_parser():
         You will be prompted if the file already exists.
         """
     )
+    output.add_argument(
+        "--timestamp",
+        metavar="STRFTIME_FORMAT",
+        help="""
+        Format for the timestamp that will replace the string \'%%timestamp%%' in the output filename.
+
+        Example: -o recording-%%timestamp%%.ts --timestamp \"%%Y-%%m-%%d-%%H-%%M-%%S\"
+        Output filename: recording-2021-01-01-00-00-00.ts
+        """
+    )
 
     stream = parser.add_argument_group("Stream options")
     stream.add_argument(
